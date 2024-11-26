@@ -2,6 +2,10 @@
 
 > A set of functions for building tiny APIs in JavaScript.
 
+[![Test](https://github.com/neogeek/tiny-api-tools/actions/workflows/test.workflow.yml/badge.svg)](https://github.com/neogeek/tiny-api-tools/actions/workflows/test.workflow.yml)
+[![Publish](https://github.com/neogeek/tiny-api-tools/actions/workflows/publish.workflow.yml/badge.svg)](https://github.com/neogeek/tiny-api-tools/actions/workflows/publish.workflow.yml)
+[![jsr](https://jsr.io/badges/@neogeek/tiny-api-tools)](https://jsr.io/@neogeek/tiny-api-tools)
+
 ## Install
 
 ### Deno
