@@ -1,3 +1,8 @@
+/**
+ * This module contains all HTTP codes for easy reference and usage.
+ * @module
+ */
+
 export const httpStatusCodes = {
   Continue: 100,
   SwitchingProtocols: 101,

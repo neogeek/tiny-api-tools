@@ -1,3 +1,8 @@
+/**
+ * This module contains custom HTTP Responses for use with JSON.
+ * @module
+ */
+
 export type Json =
   | string
   | number
