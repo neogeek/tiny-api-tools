@@ -23,6 +23,7 @@ npx jsr add @neogeek/tiny-api-tools
 ## Usage
 
 ```typescript
+import { httpStatusCodes } from 'jsr:@neogeek/tiny-api-tools/http-status-codes';
 import { JsonResponse } from 'jsr:@neogeek/tiny-api-tools/http';
 import {
   doesRequestMatchPattern,
@@ -44,7 +45,7 @@ Deno.serve({ port: 8080 }, (req) => {
   return new JsonResponse(
     { message: 'Not found' },
     {
-      status: 404,
+      status: httpStatusCodes.NotFound,
     }
   );
 });
