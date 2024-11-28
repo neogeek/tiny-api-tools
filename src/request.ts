@@ -28,7 +28,7 @@ type PathParams<Path extends string> =
  * console.log(values); // { org: 'neogeek', repo: 'tiny-api-tools', branch: 'main' }
  * ```
  *
- * @param request The request object.
+ * @param req The request object.
  * @param pattern Pattern to match against. See documentation for how to create pattern strings.
  * @returns A key value pair object.
  */
@@ -66,7 +66,7 @@ export const parsePathValuesFromRequest = <Path extends string>(
  * }
  * ```
  *
- * @param request The request object.
+ * @param req The request object.
  * @param pattern Pattern to match against. See documentation for how to create pattern strings.
  * @returns Boolean result of test.
  */
@@ -105,7 +105,7 @@ export const doesRequestMatchPattern = (
  * console.log(params); // { q: 'test', type: 'repositories' }
  * ```
  *
- * @param request The request object.
+ * @param req The request object.
  * @returns Key value pair object.
  */
 
@@ -132,7 +132,7 @@ export const getQueryParamsFromRequest = (
  * console.log(pathname) // /search
  * ```
  *
- * @param request The request object.
+ * @param req The request object.
  * @returns Path name.
  */
 
