@@ -59,11 +59,11 @@ Deno.serve({ port: 8080 }, (req) => {
 ```javascript
 import { createServer } from 'node:http';
 
+import { httpStatusCodes } from '@neogeek/tiny-api-tools/http-status-codes';
 import {
   doesUrlMatchPattern,
   parsePathValuesFromUrl,
 } from '@neogeek/tiny-api-tools/url';
-import { httpStatusCodes } from '@neogeek/tiny-api-tools/http-status-codes';
 
 const PORT = process.env.PORT || 3000;
 
