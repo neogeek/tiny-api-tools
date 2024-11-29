@@ -26,7 +26,10 @@ npx jsr add @neogeek/tiny-api-tools
 ### Deno
 
 ```typescript
-import { httpStatusCodes } from 'jsr:@neogeek/tiny-api-tools/http-status-codes';
+import {
+  httpStatusCodes,
+  httpStatusMessages,
+} from 'jsr:@neogeek/tiny-api-tools/http-status-codes';
 import { JsonResponse } from 'jsr:@neogeek/tiny-api-tools/http';
 import {
   doesRequestMatchPattern,
@@ -46,7 +49,7 @@ Deno.serve({ port: 8080 }, (req) => {
   }
 
   return new JsonResponse(
-    { message: 'Not found' },
+    { message: httpStatusMessages[httpStatusCodes.NotFound] },
     {
       status: httpStatusCodes.NotFound,
     }
@@ -59,7 +62,10 @@ Deno.serve({ port: 8080 }, (req) => {
 ```javascript
 import { createServer } from 'node:http';
 
-import { httpStatusCodes } from '@neogeek/tiny-api-tools/http-status-codes';
+import {
+  httpStatusCodes,
+  httpStatusMessages,
+} from '@neogeek/tiny-api-tools/http-status-codes';
 import {
   doesUrlMatchPattern,
   parsePathValuesFromUrl,
@@ -85,7 +91,9 @@ const server = createServer((req, res) => {
     res.end(JSON.stringify({ message: `Hello, ${params.name || 'world'}!` }));
   } else {
     res.statusCode = httpStatusCodes.NotFound;
-    res.end(JSON.stringify({ message: 'Not found' }));
+    res.end(
+      JSON.stringify({ message: httpStatusMessages[httpStatusCodes.NotFound] })
+    );
   }
 });
 

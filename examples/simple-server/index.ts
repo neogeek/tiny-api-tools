@@ -1,4 +1,7 @@
-import { httpStatusCodes } from '../../src/http-status-codes.ts';
+import {
+  httpStatusCodes,
+  httpStatusMessages,
+} from '../../src/http-status-codes.ts';
 import { JsonResponse } from '../../src/http.ts';
 import {
   doesRequestMatchPattern,
@@ -18,7 +21,7 @@ Deno.serve({ port: 8080 }, (req) => {
   }
 
   return new JsonResponse(
-    { message: 'Not found' },
+    { message: httpStatusMessages[httpStatusCodes.NotFound] },
     {
       status: httpStatusCodes.NotFound,
     }
