@@ -4,7 +4,8 @@
 
 [![Test](https://github.com/neogeek/tiny-api-tools/actions/workflows/test.workflow.yml/badge.svg)](https://github.com/neogeek/tiny-api-tools/actions/workflows/test.workflow.yml)
 [![Publish](https://github.com/neogeek/tiny-api-tools/actions/workflows/publish.workflow.yml/badge.svg)](https://github.com/neogeek/tiny-api-tools/actions/workflows/publish.workflow.yml)
-[![jsr](https://jsr.io/badges/@neogeek/tiny-api-tools)](https://jsr.io/@neogeek/tiny-api-tools)
+[![JSR](https://jsr.io/badges/@neogeek/tiny-api-tools)](https://jsr.io/@neogeek/tiny-api-tools)
+[![JSR Score](https://jsr.io/badges/@neogeek/tiny-api-tools/score)](https://jsr.io/@neogeek/tiny-api-tools)
 
 ## Install
 
