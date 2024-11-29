@@ -3,18 +3,14 @@
  * @module
  */
 
-type PathParams<Path extends string> =
-  Path extends `/${infer Param}/${infer Rest}`
-    ? Param extends `:${infer Key}`
-      ? { [K in Key]: string } & PathParams<`/${Rest}`>
-      : PathParams<`/${Rest}`>
-    : Path extends `/${infer Param}`
-    ? Param extends `:${infer Key}?`
-      ? { [K in Key]?: string }
-      : Param extends `:${infer Key}`
-      ? { [K in Key]: string }
-      : Record<string | number | symbol, never>
-    : Record<string | number | symbol, never>;
+import {
+  parsePathValuesFromUrl,
+  doesUrlMatchPattern,
+  getQueryParamsFromUrl,
+  getPathNameFromUrl,
+} from './url.ts';
+
+import type { PathParams } from './url.ts';
 
 /**
  * Parses key value pairs out of the URL of a request using a string pattern.
@@ -39,19 +35,7 @@ export const parsePathValuesFromRequest = <Path extends string>(
 ): PathParams<Path> => {
   const url = new URL(req.url);
 
-  const values = url.pathname.split('/').filter(Boolean);
-
-  const parts = pattern.split('/').filter(Boolean);
-
-  const result: Record<string, string> = {};
-
-  parts.forEach((part, index) => {
-    if (part.startsWith(':') && values[index]) {
-      result[part.replace(/^:|\?$/g, '')] = values[index];
-    }
-  });
-
-  return result as PathParams<Path>;
+  return parsePathValuesFromUrl(url, pattern);
 };
 
 /**
@@ -77,21 +61,7 @@ export const doesRequestMatchPattern = (
 ): boolean => {
   const url = new URL(req.url);
 
-  const values = url.pathname.split('/').filter(Boolean);
-
-  const parts = pattern.split('/').filter(Boolean);
-
-  const requiredParts = parts.filter((part) => {
-    return part.startsWith(':') && !part.endsWith('?');
-  });
-
-  return (
-    (values.length === parts.length ||
-      values.length === requiredParts.length) &&
-    parts.every((part, index) => {
-      return !part.startsWith(':') ? part === values[index] : true;
-    })
-  );
+  return doesUrlMatchPattern(url, pattern);
 };
 
 /**
@@ -114,11 +84,9 @@ export const getQueryParamsFromRequest = (
 ): {
   [k: string]: string;
 } => {
-  const { search } = new URL(req.url);
+  const url = new URL(req.url);
 
-  const params = Object.fromEntries(new URLSearchParams(search).entries());
-
-  return params;
+  return getQueryParamsFromUrl(url);
 };
 
 /**
@@ -137,7 +105,7 @@ export const getQueryParamsFromRequest = (
  */
 
 export const getPathNameFromRequest = (req: Request): string => {
-  const { pathname } = new URL(req.url);
+  const url = new URL(req.url);
 
-  return pathname;
+  return getPathNameFromUrl(url);
 };

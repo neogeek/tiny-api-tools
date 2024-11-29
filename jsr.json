@@ -6,7 +6,8 @@
     ".": "./src/index.ts",
     "./http-status-codes": "./src/http-status-codes.ts",
     "./http": "./src/http.ts",
-    "./request": "./src/request.ts"
+    "./request": "./src/request.ts",
+    "./url": "./src/url.ts"
   },
   "publish": {
     "include": ["LICENSE", "README.md", "src/**/*.ts"],
