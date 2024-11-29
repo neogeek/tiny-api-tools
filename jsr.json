@@ -1,7 +1,7 @@
 {
   "name": "@neogeek/tiny-api-tools",
   "description": "A set of functions for building tiny APIs in JavaScript.",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "exports": {
     ".": "./src/index.ts",
     "./http-status-codes": "./src/http-status-codes.ts",
