@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.2.1](https://github.com/neogeek/tiny-api-tools/tree/v1.2.1) - (2024-11-30)
+
+[Full Changelog](https://github.com/neogeek/tiny-api-tools/compare/v1.2.0...v1.2.1)
+
+- [hotfix] Improved pattern matching. [#3](https://github.com/neogeek/tiny-api-tools/pull/3)
+
 ## [v1.2.0](https://github.com/neogeek/tiny-api-tools/tree/v1.2.0) - (2024-11-29)
 
 [Full Changelog](https://github.com/neogeek/tiny-api-tools/compare/v1.1.0...v1.2.0)
