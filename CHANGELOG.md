@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.2.0](https://github.com/neogeek/tiny-api-tools/tree/v1.2.0) - (2024-11-29)
+
+[Full Changelog](https://github.com/neogeek/tiny-api-tools/compare/v1.1.0...v1.2.0)
+
+- [feat] Added http status messages. [#2](https://github.com/neogeek/tiny-api-tools/pull/2)
+
 ## [v1.1.0](https://github.com/neogeek/tiny-api-tools/tree/v1.1.0) - (2024-11-29)
 
 [Full Changelog](https://github.com/neogeek/tiny-api-tools/compare/v1.0.1...v1.1.0)
