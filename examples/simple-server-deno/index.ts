@@ -1,12 +1,12 @@
 import {
   httpStatusCodes,
   httpStatusMessages,
-} from '../../src/http-status-codes.ts';
-import { JsonResponse } from '../../src/http.ts';
+} from 'jsr:@neogeek/tiny-api-tools/http-status-codes';
+import { JsonResponse } from 'jsr:@neogeek/tiny-api-tools/http';
 import {
   doesRequestMatchPattern,
   parsePathValuesFromRequest,
-} from '../../src/request.ts';
+} from 'jsr:@neogeek/tiny-api-tools/request';
 
 Deno.serve({ port: 8080 }, (req) => {
   if (req.method === 'GET' && doesRequestMatchPattern(req, '/')) {

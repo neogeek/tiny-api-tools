@@ -1,0 +1,11 @@
+{
+  "name": "simple-server-nodejs",
+  "type": "module",
+  "dependencies": {
+    "@neogeek/tiny-api-tools": "npm:@jsr/neogeek__tiny-api-tools@1.2.1"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "private": true
+}

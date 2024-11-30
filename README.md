@@ -117,7 +117,8 @@ Trailing slashes are not required and won't prevent matching if the request does
 
 ## Examples
 
-1. [Simple Server](./examples/simple-server/) - A simple server with two routes `/` and `/hello/:name?`.
+1. [Simple Server (Deno)](./examples/simple-server-deno/) - A simple server with two routes `/` and `/hello/:name?` built in Deno.
+1. [Simple Server (Node.js)](./examples/simple-server-nodejs/) - A simple server with two routes `/` and `/hello/:name?` built in Node.js.
 
 ## License
 
