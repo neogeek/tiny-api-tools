@@ -41,9 +41,9 @@ Deno.serve({ port: 8080 }, (req) => {
     return new JsonResponse({ version: '1.0.0' });
   } else if (
     req.method === 'GET' &&
-    doesRequestMatchPattern(req, '/hello/:name')
+    doesRequestMatchPattern(req, '/hello/:name?')
   ) {
-    const params = parsePathValuesFromRequest(req, '/hello/:name');
+    const params = parsePathValuesFromRequest(req, '/hello/:name?');
 
     return new JsonResponse({ message: `Hello, ${params.name || 'world'}!` });
   }
@@ -85,8 +85,11 @@ const server = createServer((req, res) => {
 
   if (req.method === 'GET' && doesUrlMatchPattern(url, '/')) {
     res.end(JSON.stringify({ version: '1.0.0' }));
-  } else if (req.method === 'GET' && doesUrlMatchPattern(url, '/hello/:name')) {
-    const params = parsePathValuesFromUrl(url, '/hello/:name');
+  } else if (
+    req.method === 'GET' &&
+    doesUrlMatchPattern(url, '/hello/:name?')
+  ) {
+    const params = parsePathValuesFromUrl(url, '/hello/:name?');
 
     res.end(JSON.stringify({ message: `Hello, ${params.name || 'world'}!` }));
   } else {
@@ -114,7 +117,7 @@ Trailing slashes are not required and won't prevent matching if the request does
 
 ## Examples
 
-1. [Simple Server](./examples/simple-server/) - A simple server with two routes `/` and `/hello/:name`.
+1. [Simple Server](./examples/simple-server/) - A simple server with two routes `/` and `/hello/:name?`.
 
 ## License
 

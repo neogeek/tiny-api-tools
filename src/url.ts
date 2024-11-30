@@ -72,19 +72,25 @@ export const parsePathValuesFromUrl = <Path extends string>(
 export const doesUrlMatchPattern = (url: URL, pattern: string): boolean => {
   const values = url.pathname.split('/').filter(Boolean);
 
-  const parts = pattern.split('/').filter(Boolean);
+  const params = pattern.split('/').filter(Boolean);
 
-  const requiredParts = parts.filter((part) => {
-    return part.startsWith(':') && !part.endsWith('?');
+  const valid = params.map((param, index) => {
+    const value = values[index];
+
+    if (!param) {
+      return false;
+    }
+
+    if (!param.startsWith(':')) {
+      return value === param;
+    } else if (!param.endsWith('?')) {
+      return value !== undefined;
+    } else {
+      return true;
+    }
   });
 
-  return (
-    (values.length === parts.length ||
-      values.length === requiredParts.length) &&
-    parts.every((part, index) => {
-      return !part.startsWith(':') ? part === values[index] : true;
-    })
-  );
+  return values.length <= params.length && valid.every(Boolean);
 };
 
 /**

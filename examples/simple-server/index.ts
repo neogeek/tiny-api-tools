@@ -13,9 +13,9 @@ Deno.serve({ port: 8080 }, (req) => {
     return new JsonResponse({ version: '1.0.0' });
   } else if (
     req.method === 'GET' &&
-    doesRequestMatchPattern(req, '/hello/:name')
+    doesRequestMatchPattern(req, '/hello/:name?')
   ) {
-    const params = parsePathValuesFromRequest(req, '/hello/:name');
+    const params = parsePathValuesFromRequest(req, '/hello/:name?');
 
     return new JsonResponse({ message: `Hello, ${params.name || 'world'}!` });
   }
