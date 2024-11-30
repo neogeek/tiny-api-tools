@@ -25,10 +25,19 @@ Deno.test('match path with optional values', () => {
   expect(match).toBe(true);
 });
 
-Deno.test('does not match path', () => {
+Deno.test('does not match path (extra params)', () => {
   const match = doesRequestMatchPattern(
     new Request(new URL('http://github.com/neogeek/tiny-api-tools')),
     '/:org/:repo/:branch'
+  );
+
+  expect(match).toBe(false);
+});
+
+Deno.test('does not match path (extra values)', () => {
+  const match = doesRequestMatchPattern(
+    new Request(new URL('http://github.com/neogeek/tiny-api-tools/main')),
+    '/:org/:repo'
   );
 
   expect(match).toBe(false);
