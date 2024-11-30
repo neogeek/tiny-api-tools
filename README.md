@@ -1,4 +1,4 @@
-# Tiny API Tools
+[![Tiny API Tools](cover.png)](cover.png)
 
 > A set of functions for building tiny APIs in JavaScript.
 
