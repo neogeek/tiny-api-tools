@@ -111,3 +111,11 @@ Each pattern consists of static names `/version` and variable names `/:username`
 Variable name at the end of a pattern can be made optional by using a `?` character at the end of the pattern like this `/:org/:repo/:branch?`.
 
 Trailing slashes are not required and won't prevent matching if the request doesn't include it.
+
+## Examples
+
+1. [Simple Server](./examples/simple-server/) - A simple server with two routes `/` and `/hello/:name`.
+
+## License
+
+[The MIT License (MIT)](./LICENSE)
