@@ -1,41 +1,30 @@
 import { createServer } from 'node:http';
 
-import {
-  httpStatusCodes,
-  httpStatusMessages,
-} from '@neogeek/tiny-api-tools/http-status-codes';
-import {
-  doesUrlMatchPattern,
-  parsePathValuesFromUrl,
-} from '@neogeek/tiny-api-tools/url';
+import { JsonResponse } from '@neogeek/tiny-api-tools/http';
+import { handleRoutesWithUrl } from '@neogeek/tiny-api-tools/url';
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
-const server = createServer((req, res) => {
-  if (!req.url) {
-    res.statusCode = httpStatusCodes.InternalServerError;
-    res.end(JSON.stringify({ message: 'Internal Server Error' }));
-
-    return;
-  }
-
+const server = createServer(async (req, res) => {
   const url = new URL(req.url, `http://localhost:${PORT}/`);
 
-  if (req.method === 'GET' && doesUrlMatchPattern(url, '/')) {
-    res.end(JSON.stringify({ version: '1.0.0' }));
-  } else if (
-    req.method === 'GET' &&
-    doesUrlMatchPattern(url, '/hello/:name?')
-  ) {
-    const params = parsePathValuesFromUrl(url, '/hello/:name?');
+  const response = await handleRoutesWithUrl(req.method, url, [
+    {
+      pattern: '/',
+      handler: () => new JsonResponse({ version: '1.0.0' }),
+    },
+    {
+      pattern: '/hello/:name?',
+      handler: ({ values }) =>
+        new JsonResponse({
+          message: `Hello, ${values.name || 'world'}!`,
+        }),
+    },
+  ]);
 
-    res.end(JSON.stringify({ message: `Hello, ${params.name || 'world'}!` }));
-  } else {
-    res.statusCode = httpStatusCodes.NotFound;
-    res.end(
-      JSON.stringify({ message: httpStatusMessages[httpStatusCodes.NotFound] })
-    );
-  }
+  res.statusCode = response.status;
+  res.setHeaders(response.headers);
+  res.end(await response.text());
 });
 
 server.listen(PORT, () => {

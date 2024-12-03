@@ -1,29 +1,19 @@
-import {
-  httpStatusCodes,
-  httpStatusMessages,
-} from 'jsr:@neogeek/tiny-api-tools/http-status-codes';
 import { JsonResponse } from 'jsr:@neogeek/tiny-api-tools/http';
-import {
-  doesRequestMatchPattern,
-  parsePathValuesFromRequest,
-} from 'jsr:@neogeek/tiny-api-tools/request';
 
-Deno.serve({ port: 8080 }, (req) => {
-  if (req.method === 'GET' && doesRequestMatchPattern(req, '/')) {
-    return new JsonResponse({ version: '1.0.0' });
-  } else if (
-    req.method === 'GET' &&
-    doesRequestMatchPattern(req, '/hello/:name?')
-  ) {
-    const params = parsePathValuesFromRequest(req, '/hello/:name?');
+import { handleRoutesWithRequest } from 'jsr:@neogeek/tiny-api-tools/request';
 
-    return new JsonResponse({ message: `Hello, ${params.name || 'world'}!` });
-  }
-
-  return new JsonResponse(
-    { message: httpStatusMessages[httpStatusCodes.NotFound] },
+Deno.serve({ port: 8080 }, async (req) => {
+  return await handleRoutesWithRequest(req, [
     {
-      status: httpStatusCodes.NotFound,
-    }
-  );
+      pattern: '/',
+      handler: () => new JsonResponse({ version: '1.0.0' }),
+    },
+    {
+      pattern: '/hello/:name?',
+      handler: ({ values }) =>
+        new JsonResponse({
+          message: `Hello, ${values.name || 'world'}!`,
+        }),
+    },
+  ]);
 });
