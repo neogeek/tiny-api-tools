@@ -7,6 +7,7 @@
     "./http-status-codes": "./src/http-status-codes.ts",
     "./http": "./src/http.ts",
     "./request": "./src/request.ts",
+    "./types": "./src/types.ts",
     "./url": "./src/url.ts"
   },
   "publish": {

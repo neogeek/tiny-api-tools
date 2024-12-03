@@ -10,7 +10,7 @@ import {
   getPathNameFromUrl,
 } from './url.ts';
 
-import type { PathParams } from './url.ts';
+import type { PathParams, RequestParams } from './types.ts';
 
 /**
  * Parses key value pairs out of the URL of a request using a string pattern.
@@ -79,11 +79,7 @@ export const doesRequestMatchPattern = (
  * @returns Key value pair object.
  */
 
-export const getQueryParamsFromRequest = (
-  req: Request
-): {
-  [k: string]: string;
-} => {
+export const getQueryParamsFromRequest = (req: Request): RequestParams => {
   const url = new URL(req.url);
 
   return getQueryParamsFromUrl(url);

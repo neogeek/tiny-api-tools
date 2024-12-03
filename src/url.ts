@@ -3,18 +3,7 @@
  * @module
  */
 
-export type PathParams<Path extends string> =
-  Path extends `/${infer Param}/${infer Rest}`
-    ? Param extends `:${infer Key}`
-      ? { [K in Key]: string } & PathParams<`/${Rest}`>
-      : PathParams<`/${Rest}`>
-    : Path extends `/${infer Param}`
-    ? Param extends `:${infer Key}?`
-      ? { [K in Key]?: string }
-      : Param extends `:${infer Key}`
-      ? { [K in Key]: string }
-      : Record<string | number | symbol, never>
-    : Record<string | number | symbol, never>;
+import type { PathParams, RequestParams } from './types.ts';
 
 /**
  * Parses key value pairs out of a URL using a string pattern.
@@ -108,11 +97,7 @@ export const doesUrlMatchPattern = (url: URL, pattern: string): boolean => {
  * @returns Key value pair object.
  */
 
-export const getQueryParamsFromUrl = (
-  url: URL
-): {
-  [k: string]: string;
-} => {
+export const getQueryParamsFromUrl = (url: URL): RequestParams => {
   const params = Object.fromEntries(new URLSearchParams(url.search).entries());
 
   return params;
