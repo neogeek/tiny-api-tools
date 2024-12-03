@@ -3,7 +3,10 @@
  * @module
  */
 
-import type { PathParams, RequestParams } from './types.ts';
+import { httpStatusMessages, httpStatusCodes } from './http-status-codes.ts';
+import { JsonResponse } from './http.ts';
+
+import type { PathParams, RequestParams, RouteHandler } from './types.ts';
 
 /**
  * Parses key value pairs out of a URL using a string pattern.
@@ -122,4 +125,72 @@ export const getPathNameFromUrl = (url: URL): string => {
   const { pathname } = url;
 
   return pathname;
+};
+
+/**
+ * Handle routes automatically using an array of route patterns and handlers.
+ *
+ * ```typescript
+ * const response = await handleRoutesWithUrl('GET', url, [
+ *   {
+ *     pattern: '/',
+ *     handler: () => new JsonResponse({ version: '1.0.0' }),
+ *   },
+ *   {
+ *     pattern: '/hello/:name?',
+ *     handler: ({ values }) => {
+ *       return new JsonResponse({
+ *         message: `Hello, ${values.name || 'world'}!`,
+ *       });
+ *     },
+ *   },
+ * ]);
+ * ```
+ *
+ * @param method HTTP method of request.
+ * @param url The URL object.
+ * @param routes Array of route configs.
+ * @param routes.method HTTP method of request.
+ * @param routes.pattern Pattern to match against. See documentation for how to create pattern strings.
+ * @param routes.handler Route handler callback.
+ * @returns HTTP Response object.
+ */
+
+export const handleRoutesWithUrl = async (
+  method: string,
+  url: URL,
+  routes: {
+    method?: string;
+    pattern: string;
+    handler: RouteHandler;
+  }[]
+): Promise<Response> => {
+  const route = routes
+    .filter(
+      (route) =>
+        (!route.method || route.method === method) &&
+        doesUrlMatchPattern(url, route.pattern)
+    )
+    .find(Boolean);
+
+  if (route) {
+    const params = getQueryParamsFromUrl(url);
+    const values = parsePathValuesFromUrl(url, route.pattern);
+
+    try {
+      return await route.handler({ params, values });
+    } catch {
+      return new JsonResponse({
+        message: httpStatusMessages[httpStatusCodes.InternalServerError],
+        status: httpStatusCodes.InternalServerError,
+      });
+    }
+  }
+
+  return new JsonResponse(
+    { message: httpStatusMessages[httpStatusCodes.NotFound] },
+    {
+      status: httpStatusCodes.NotFound,
+    }
+  );
 };

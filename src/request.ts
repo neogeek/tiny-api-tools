@@ -8,9 +8,10 @@ import {
   doesUrlMatchPattern,
   getQueryParamsFromUrl,
   getPathNameFromUrl,
+  handleRoutesWithUrl,
 } from './url.ts';
 
-import type { PathParams, RequestParams } from './types.ts';
+import type { PathParams, RequestParams, RouteHandler } from './types.ts';
 
 /**
  * Parses key value pairs out of the URL of a request using a string pattern.
@@ -104,4 +105,45 @@ export const getPathNameFromRequest = (req: Request): string => {
   const url = new URL(req.url);
 
   return getPathNameFromUrl(url);
+};
+
+/**
+ * Handle routes automatically using an array of route patterns and handlers.
+ *
+ * ```typescript
+ * const response = await handleRoutesWithRequest(req, [
+ *   {
+ *     pattern: '/',
+ *     handler: () => new JsonResponse({ version: '1.0.0' }),
+ *   },
+ *   {
+ *     pattern: '/hello/:name?',
+ *     handler: ({ values }) => {
+ *       return new JsonResponse({
+ *         message: `Hello, ${values.name || 'world'}!`,
+ *       });
+ *     },
+ *   },
+ * ]);
+ * ```
+ *
+ * @param req The request object.
+ * @param routes Array of route configs.
+ * @param routes.method HTTP method of request.
+ * @param routes.pattern Pattern to match against. See documentation for how to create pattern strings.
+ * @param routes.handler Route handler callback.
+ * @returns HTTP Response object.
+ */
+
+export const handleRoutesWithRequest = async (
+  req: Request,
+  routes: {
+    method?: string;
+    pattern: string;
+    handler: RouteHandler;
+  }[]
+): Promise<Response> => {
+  const url = new URL(req.url);
+
+  return await handleRoutesWithUrl(req.method, url, routes);
 };
