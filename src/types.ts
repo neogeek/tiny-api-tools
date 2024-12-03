@@ -12,3 +12,13 @@ export type PathParams<Path extends string> =
     : Record<string | number | symbol, never>;
 
 export type RequestParams = { [key: string]: string };
+
+export type RequestValues = { [key: string]: string };
+
+export type RouteHandler = ({
+  params,
+  values,
+}: {
+  params: RequestParams;
+  values: RequestValues;
+}) => Response | Promise<Response>;
