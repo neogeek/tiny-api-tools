@@ -1,3 +1,8 @@
+/**
+ * This module contains common type definitions.
+ * @module
+ */
+
 export type PathParams<Path extends string> =
   Path extends `/${infer Param}/${infer Rest}`
     ? Param extends `:${infer Key}`
