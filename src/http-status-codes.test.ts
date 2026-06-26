@@ -6,9 +6,9 @@ Deno.test(
   'check http status codes have similar counts for string and number keys',
   () => {
     expect(Object.keys(httpStatusMessages).length).toBe(
-      Object.keys(httpStatusCodes).length
+      Object.keys(httpStatusCodes).length,
     );
-  }
+  },
 );
 
 Deno.test(
@@ -17,14 +17,14 @@ Deno.test(
     const codeValues = Array.from(new Set(Object.values(httpStatusCodes)));
 
     const messageValues = Array.from(
-      new Set(Object.keys(httpStatusMessages).map(parseFloat))
+      new Set(Object.keys(httpStatusMessages).map(parseFloat)),
     );
 
     const diff = Array.from(new Set(codeValues)).filter(
-      (value) => !messageValues.includes(value)
+      (value) => !messageValues.includes(value),
     );
 
     expect(codeValues.length).toBe(messageValues.length);
     expect(diff.length).toBe(0);
-  }
+  },
 );

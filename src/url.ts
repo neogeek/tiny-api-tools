@@ -3,7 +3,7 @@
  * @module
  */
 
-import { httpStatusMessages, httpStatusCodes } from './http-status-codes.ts';
+import { httpStatusCodes, httpStatusMessages } from './http-status-codes.ts';
 import { JsonResponse } from './http.ts';
 
 import type { PathParams, RequestParams, RouteHandler } from './types.ts';
@@ -27,7 +27,7 @@ import type { PathParams, RequestParams, RouteHandler } from './types.ts';
 
 export const parsePathValuesFromUrl = <Path extends string>(
   url: URL,
-  pattern: Path
+  pattern: Path,
 ): PathParams<Path> => {
   const values = url.pathname.split('/').filter(Boolean);
 
@@ -163,13 +163,13 @@ export const handleRoutesWithUrl = async (
     method?: string;
     pattern: string;
     handler: RouteHandler;
-  }[]
+  }[],
 ): Promise<Response> => {
   const route = routes
     .filter(
       (route) =>
         (!route.method || route.method === method) &&
-        doesUrlMatchPattern(url, route.pattern)
+        doesUrlMatchPattern(url, route.pattern),
     )
     .find(Boolean);
 
@@ -191,6 +191,6 @@ export const handleRoutesWithUrl = async (
     { message: httpStatusMessages[httpStatusCodes.NotFound] },
     {
       status: httpStatusCodes.NotFound,
-    }
+    },
   );
 };

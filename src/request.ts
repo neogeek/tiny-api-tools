@@ -4,11 +4,11 @@
  */
 
 import {
-  parsePathValuesFromUrl,
   doesUrlMatchPattern,
-  getQueryParamsFromUrl,
   getPathNameFromUrl,
+  getQueryParamsFromUrl,
   handleRoutesWithUrl,
+  parsePathValuesFromUrl,
 } from './url.ts';
 
 import type { PathParams, RequestParams, RouteHandler } from './types.ts';
@@ -32,7 +32,7 @@ import type { PathParams, RequestParams, RouteHandler } from './types.ts';
 
 export const parsePathValuesFromRequest = <Path extends string>(
   req: Request,
-  pattern: Path
+  pattern: Path,
 ): PathParams<Path> => {
   const url = new URL(req.url);
 
@@ -58,7 +58,7 @@ export const parsePathValuesFromRequest = <Path extends string>(
 
 export const doesRequestMatchPattern = (
   req: Request,
-  pattern: string
+  pattern: string,
 ): boolean => {
   const url = new URL(req.url);
 
@@ -141,7 +141,7 @@ export const handleRoutesWithRequest = async (
     method?: string;
     pattern: string;
     handler: RouteHandler;
-  }[]
+  }[],
 ): Promise<Response> => {
   const url = new URL(req.url);
 

@@ -17,7 +17,7 @@ Deno.test('json response default status', () => {
 Deno.test('json response custom status', () => {
   const response = new JsonResponse(
     { message: 'Hello, world!' },
-    { status: 404 }
+    { status: 404 },
   );
 
   expect(response.status).toBe(404);
@@ -27,7 +27,7 @@ Deno.test('json response default header', () => {
   const response = new JsonResponse({ message: 'Hello, world!' });
 
   expect(response.headers.get('content-type')).toBe(
-    'application/json; charset=utf-8'
+    'application/json; charset=utf-8',
   );
 });
 
@@ -38,7 +38,7 @@ Deno.test('json response custom header', () => {
       headers: {
         'content-type': 'text/html; charset=utf-8',
       },
-    }
+    },
   );
 
   expect(response.headers.get('content-type')).toBe('text/html; charset=utf-8');
