@@ -1,4 +1,4 @@
-import { expect } from 'jsr:@std/expect';
+import { expect } from '@std/expect';
 
 import { httpStatusCodes } from './http-status-codes.ts';
 import { JsonResponse } from './http.ts';
