@@ -5,8 +5,8 @@ on:
     branches:
       - main
     paths-ignore:
-      - 'CHANGELOG.md'
-      - 'README.md'
+      - "CHANGELOG.md"
+      - "README.md"
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     branches:
@@ -25,9 +25,9 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
-      - uses: denoland/setup-deno@v2
+      - uses: denoland/setup-deno@667a34cdef165d8d2b2e98dde39547c9daac7282 # v2.0.4
         with:
           deno-version: v2.x
 
