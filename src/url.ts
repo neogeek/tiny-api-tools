@@ -183,11 +183,11 @@ export const handleRoutesWithUrl = async (
       try {
         const contentType = req.headers.get('content-type') || '';
 
-        if (contentType === 'application/json') {
+        if (contentType.startsWith('application/json')) {
           body = await req.json();
         } else if (
-          contentType === 'multipart/form-data' ||
-          contentType === 'application/x-www-form-urlencoded'
+          contentType.startsWith('multipart/form-data') ||
+          contentType.startsWith('application/x-www-form-urlencoded')
         ) {
           const formData = await req.formData();
           body = Object.fromEntries(formData.entries());

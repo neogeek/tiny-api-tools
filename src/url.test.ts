@@ -10,6 +10,8 @@ import {
   parsePathValuesFromUrl,
 } from './url.ts';
 
+import type { RouteHandler } from './types.ts';
+
 Deno.test('match path', () => {
   const match = doesUrlMatchPattern(
     new URL('http://github.com/neogeek/tiny-api-tools'),
@@ -101,6 +103,17 @@ const generateMockRoutes = async (req: Request) => {
         });
       },
     },
+    {
+      pattern: '/api/upload',
+      method: 'POST',
+      handler: (({ body }) => {
+        console.log(body);
+
+        return new JsonResponse({
+          message: 'Uploaded',
+        });
+      }) as RouteHandler<{ data: string }>,
+    },
   ]);
 };
 
@@ -166,4 +179,86 @@ Deno.test('test handling routes not found', async () => {
   );
   expect(response.status).toBe(httpStatusCodes.NotFound);
   expect(body).toBe('{"message":"Not Found"}');
+});
+
+Deno.test('test post (text) route', async () => {
+  const request = new Request('http://localhost:8080/api/upload', {
+    method: 'POST',
+    body: 'hello world',
+  });
+
+  const response = await generateMockRoutes(request);
+
+  const body = await response.text();
+
+  expect(response.headers.get('content-type')).toBe(
+    'application/json; charset=utf-8',
+  );
+  expect(response.status).toBe(httpStatusCodes.OK);
+  expect(body).toBe('{"message":"Uploaded"}');
+});
+
+Deno.test('test post (json) route', async () => {
+  const request = new Request('http://localhost:8080/api/upload', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: JSON.stringify({}),
+  });
+
+  const response = await generateMockRoutes(request);
+
+  const body = await response.text();
+
+  expect(response.headers.get('content-type')).toBe(
+    'application/json; charset=utf-8',
+  );
+  expect(response.status).toBe(httpStatusCodes.OK);
+  expect(body).toBe('{"message":"Uploaded"}');
+});
+
+Deno.test('test post (form data) route', async () => {
+  const formData = new FormData();
+  formData.append('key', 'value');
+
+  const request = new Request('http://localhost:8080/api/upload', {
+    method: 'POST',
+    body: formData,
+  });
+
+  const response = await generateMockRoutes(request);
+
+  const body = await response.text();
+
+  expect(response.headers.get('content-type')).toBe(
+    'application/json; charset=utf-8',
+  );
+  expect(response.status).toBe(httpStatusCodes.OK);
+  expect(body).toBe('{"message":"Uploaded"}');
+});
+
+Deno.test('test post (file) route', async () => {
+  const formData = new FormData();
+  formData.append('key', 'value');
+
+  const request = new Request('http://localhost:8080/api/upload', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/octet-stream',
+      'Accept': 'application/octet-stream',
+    },
+    body: new Blob(['Hello, world.'], { type: 'application/octet-stream' }),
+  });
+
+  const response = await generateMockRoutes(request);
+
+  const body = await response.text();
+
+  expect(response.headers.get('content-type')).toBe(
+    'application/json; charset=utf-8',
+  );
+  expect(response.status).toBe(httpStatusCodes.OK);
+  expect(body).toBe('{"message":"Uploaded"}');
 });
