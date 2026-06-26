@@ -26,9 +26,9 @@ npx jsr add @neogeek/tiny-api-tools
 ### Deno
 
 ```typescript
-import { JsonResponse } from 'jsr:@neogeek/tiny-api-tools/http';
+import { JsonResponse } from '@neogeek/tiny-api-tools/http';
 
-import { handleRoutesWithRequest } from 'jsr:@neogeek/tiny-api-tools/request';
+import { handleRoutesWithRequest } from '@neogeek/tiny-api-tools/request';
 
 Deno.serve({ port: 8080 }, async (req) => {
   return await handleRoutesWithRequest(req, [
