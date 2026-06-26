@@ -140,10 +140,10 @@ export const handleRoutesWithRequest = async (
   routes: {
     method?: string;
     pattern: string;
-    handler: RouteHandler;
+    handler: RouteHandler<never>;
   }[],
 ): Promise<Response> => {
   const url = new URL(req.url);
 
-  return await handleRoutesWithUrl(req.method, url, routes);
+  return await handleRoutesWithUrl(req, url, routes);
 };
