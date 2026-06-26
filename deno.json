@@ -1,4 +1,7 @@
 {
+  "fmt": {
+    "singleQuote": true
+  },
   "imports": {
     "@std/expect": "jsr:@std/expect@^1.0.19"
   }
