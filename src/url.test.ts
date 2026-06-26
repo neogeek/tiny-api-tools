@@ -85,8 +85,10 @@ Deno.test('parse path name from URL with optional values', () => {
   expect(values.branch).toBe(undefined);
 });
 
-const generateMockRoutes = async (method: string, url: URL) =>
-  await handleRoutesWithUrl(method, url, [
+const generateMockRoutes = async (req: Request) => {
+  const url = new URL(req.url);
+
+  return await handleRoutesWithUrl(req, url, [
     {
       pattern: '/',
       handler: () => new JsonResponse({ version: '1.0.0' }),
@@ -100,11 +102,14 @@ const generateMockRoutes = async (method: string, url: URL) =>
       },
     },
   ]);
+};
 
 Deno.test('test handling routes', async () => {
-  const url = new URL('http://localhost:8080/');
+  const request = new Request('http://localhost:8080/', {
+    method: 'GET',
+  });
 
-  const response = await generateMockRoutes('GET', url);
+  const response = await generateMockRoutes(request);
 
   const body = await response.text();
 
@@ -116,9 +121,11 @@ Deno.test('test handling routes', async () => {
 });
 
 Deno.test('test handling routes with out pattern values', async () => {
-  const url = new URL('http://localhost:8080/hello');
+  const request = new Request('http://localhost:8080/hello', {
+    method: 'GET',
+  });
 
-  const response = await generateMockRoutes('GET', url);
+  const response = await generateMockRoutes(request);
 
   const body = await response.text();
 
@@ -130,9 +137,11 @@ Deno.test('test handling routes with out pattern values', async () => {
 });
 
 Deno.test('test handling routes with pattern values', async () => {
-  const url = new URL('http://localhost:8080/hello/scott');
+  const request = new Request('http://localhost:8080/hello/scott', {
+    method: 'GET',
+  });
 
-  const response = await generateMockRoutes('GET', url);
+  const response = await generateMockRoutes(request);
 
   const body = await response.text();
 
@@ -144,9 +153,11 @@ Deno.test('test handling routes with pattern values', async () => {
 });
 
 Deno.test('test handling routes not found', async () => {
-  const url = new URL('http://localhost:8080/missing');
+  const request = new Request('http://localhost:8080/missing', {
+    method: 'GET',
+  });
 
-  const response = await generateMockRoutes('GET', url);
+  const response = await generateMockRoutes(request);
 
   const body = await response.text();
 

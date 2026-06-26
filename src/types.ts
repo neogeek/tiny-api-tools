@@ -18,10 +18,12 @@ export type RequestParams = { [key: string]: string };
 
 export type RequestValues = { [key: string]: string };
 
-export type RouteHandler = ({
+export type RouteHandler<TBody = unknown> = ({
   params,
+  body,
   values,
 }: {
   params: RequestParams;
+  body: TBody;
   values: RequestValues;
 }) => Response | Promise<Response>;

@@ -147,7 +147,7 @@ export const getPathNameFromUrl = (url: URL): string => {
  * ]);
  * ```
  *
- * @param method HTTP method of request.
+ * @param request The request object.
  * @param url The URL object.
  * @param routes Array of route configs.
  * @param routes.method HTTP method of request.
@@ -157,18 +157,18 @@ export const getPathNameFromUrl = (url: URL): string => {
  */
 
 export const handleRoutesWithUrl = async (
-  method: string,
+  req: Request,
   url: URL,
   routes: {
     method?: string;
     pattern: string;
-    handler: RouteHandler;
+    handler: RouteHandler<never>;
   }[],
 ): Promise<Response> => {
   const route = routes
     .filter(
       (route) =>
-        (!route.method || route.method === method) &&
+        (!route.method || route.method === req.method) &&
         doesUrlMatchPattern(url, route.pattern),
     )
     .find(Boolean);
@@ -177,8 +177,35 @@ export const handleRoutesWithUrl = async (
     const params = getQueryParamsFromUrl(url);
     const values = parsePathValuesFromUrl(url, route.pattern);
 
+    let body: unknown = null;
+
+    if (req.body && req.method !== 'GET' && req.method !== 'HEAD') {
+      try {
+        const contentType = req.headers.get('content-type') || '';
+
+        if (contentType === 'application/json') {
+          body = await req.json();
+        } else if (
+          contentType === 'multipart/form-data' ||
+          contentType === 'application/x-www-form-urlencoded'
+        ) {
+          const formData = await req.formData();
+          body = Object.fromEntries(formData.entries());
+        } else if (contentType.startsWith('text/')) {
+          body = await req.text();
+        } else {
+          body = await req.arrayBuffer();
+        }
+      } catch {
+        return new JsonResponse(
+          { message: httpStatusMessages[httpStatusCodes.BadRequest] },
+          { status: httpStatusCodes.BadRequest },
+        );
+      }
+    }
+
     try {
-      return await route.handler({ params, values });
+      return await route.handler({ params, body: body as never, values });
     } catch {
       return new JsonResponse({
         message: httpStatusMessages[httpStatusCodes.InternalServerError],
