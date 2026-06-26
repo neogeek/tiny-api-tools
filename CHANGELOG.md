@@ -1,6 +1,12 @@
 # Changelog
 
-## [v2.0.0](https://github.com/neogeek/tiny-api-tools/tree/v2.0.0) - (2026-06-25)
+## [v2.0.1](https://github.com/neogeek/tiny-api-tools/tree/v2.0.1) - (2026-06-26)
+
+[Full Changelog](https://github.com/neogeek/tiny-api-tools/compare/v2.0.0...v2.0.1)
+
+- [hotfix] Fixed issue with content type comparison. [#7](https://github.com/neogeek/tiny-api-tools/pull/7)
+
+## [v2.0.0](https://github.com/neogeek/tiny-api-tools/tree/v2.0.0) - (2026-06-26)
 
 [Full Changelog](https://github.com/neogeek/tiny-api-tools/compare/v1.3.0...v2.0.0)
 
