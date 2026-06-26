@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "@neogeek/tiny-api-tools/http": "../../src/http.ts",
+    "@neogeek/tiny-api-tools/request": "../../src/request.ts"
+  }
+}
