@@ -1,5 +1,11 @@
 # Changelog
 
+## [HEAD](https://github.com/neogeek/tiny-api-tools/tree/HEAD) - (2026-06-25)
+
+[Full Changelog](https://github.com/neogeek/tiny-api-tools/compare/v1.3.0...HEAD)
+
+- [feat] Pass request to handleRoutesWithUrl to support body parsing. [#6](https://github.com/neogeek/tiny-api-tools/pull/6)
+
 ## [v1.3.0](https://github.com/neogeek/tiny-api-tools/tree/v1.3.0) - (2024-12-03)
 
 [Full Changelog](https://github.com/neogeek/tiny-api-tools/compare/v1.2.1...v1.3.0)
