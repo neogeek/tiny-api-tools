@@ -21,6 +21,17 @@ const server = createServer(async (req, res) => {
           message: `Hello, ${values.name || 'world'}!`,
         }),
     },
+    {
+      pattern: '/api/upload',
+      method: 'POST',
+      handler: (({ body }) => {
+        console.log(body);
+
+        return new JsonResponse({
+          message: 'Uploaded',
+        });
+      }) as RouteHandler<{ data: string }>,
+    },
   ]);
 
   res.statusCode = response.status;
